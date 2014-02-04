@@ -14,7 +14,9 @@
 
 	<ldap:ldap-template 
 		id="ldapTemplate" 
-		search-scope="SUBTREE" />
+		search-scope="SUBTREE" 
+		count-limit="10"
+		time-limit="30"/>
 
 	<context:component-scan base-package="be.nuytsm" />
 

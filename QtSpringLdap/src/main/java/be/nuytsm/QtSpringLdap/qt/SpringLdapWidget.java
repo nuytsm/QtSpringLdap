@@ -18,6 +18,7 @@ import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QLineEdit;
 import com.trolltech.qt.gui.QMainWindow;
 import com.trolltech.qt.gui.QMenu;
+import com.trolltech.qt.gui.QMessageBox;
 import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QTabWidget;
 import com.trolltech.qt.gui.QTextEdit;
@@ -87,14 +88,14 @@ public class SpringLdapWidget extends QWidget {
 	}
 	
 	private void query(){
-		List<LdapQueryService.QueryResult> result = null;
-		if (!accountEdit.text().isEmpty()){
-			result = ldapQueryService.getByAccount(accountEdit.text());			
-		} else if (!serviceNumberEdit.text().isEmpty()){
-			result = ldapQueryService.getByServiceNumber(serviceNumberEdit.text());
-		}
+		List<LdapQueryService.QueryResult> result = getQueryResult();
 		if (null != result && !result.isEmpty()){
 //			this.result.setText(result.get(0));
+			
+			if (result.size() > 20){
+				QMessageBox.warning(this, "Too many results", "More than 20 results found, will not show them here...");
+			}
+			
 			for (QueryResult qr : result) {
 				QTextEdit qtext = new QTextEdit();
 				qtext.setText(qr.getResult());
@@ -102,5 +103,15 @@ public class SpringLdapWidget extends QWidget {
 			}
 			
 		}
+	}
+
+	private List<LdapQueryService.QueryResult> getQueryResult() {
+		List<LdapQueryService.QueryResult> result = null;
+		if (!accountEdit.text().isEmpty()){
+			result = ldapQueryService.getByAccount(accountEdit.text());			
+		} else if (!serviceNumberEdit.text().isEmpty()){
+			result = ldapQueryService.getByServiceNumber(serviceNumberEdit.text());
+		}
+		return result;
 	}
 }
