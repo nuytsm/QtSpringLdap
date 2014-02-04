@@ -7,22 +7,25 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
+import be.nuytsm.QtSpringLdap.ApplicationContextProvider;
 import be.nuytsm.QtSpringLdap.LdapQueryService;
 import be.nuytsm.QtSpringLdap.LdapQueryService.QueryResult;
 
+import com.trolltech.qt.gui.QAction;
+import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QLineEdit;
+import com.trolltech.qt.gui.QMainWindow;
+import com.trolltech.qt.gui.QMenu;
 import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QTabWidget;
 import com.trolltech.qt.gui.QTextEdit;
 import com.trolltech.qt.gui.QWidget;
 
-@Controller
-public class SpringLdapWidget extends QWidget{
+public class SpringLdapWidget extends QWidget {
 	
-	@Inject
-	private LdapQueryService ldapQueryService;
+	private LdapQueryService ldapQueryService = ApplicationContextProvider.getApplicationContext().getBean("LdapQueryService", LdapQueryService.class);
 	
 //	QTextEdit result;
 	QLineEdit accountEdit, serviceNumberEdit;
@@ -31,11 +34,11 @@ public class SpringLdapWidget extends QWidget{
 	public SpringLdapWidget() {
 		initUI();
 		
-		setWindowTitle("QtSpringLdap"); 
+//		setWindowTitle("QtSpringLdap"); 
 		resize(800, 600);
-        move(300, 300);        
+//        move(300, 300);        
         
-        show();
+        
 	}
 
 	private void initUI() {
@@ -43,6 +46,8 @@ public class SpringLdapWidget extends QWidget{
 		createQueryPart(grid);
 		createResultPart(grid);
 	}
+
+
 
 
 	private void createQueryPart(QGridLayout grid) {

@@ -5,7 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QApplication;
+import com.trolltech.qt.gui.QGridLayout;
+import com.trolltech.qt.gui.QMainWindow;
+import com.trolltech.qt.gui.QMenu;
 
 public class GuiStarter {
 	
@@ -17,7 +21,10 @@ public class GuiStarter {
 		QApplication.initialize(args);
 		logger.debug("Loading context");
 		ApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
-//		new SpringLdapWidget(); is declared as spring component ->  automatic initialization
+		
+		logger.debug("Opening main window");
+		new MainWindow();
+		
 		QApplication.exec();
 	}
 
